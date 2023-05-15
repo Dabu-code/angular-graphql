@@ -19,6 +19,7 @@
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/router": "^15.0.0",
     "@apollo/client": "^3.7.14",
+    "angular-cli-ghpages": "^1.0.6",
     "apollo-angular": "^4.2.1",
     "graphql": "^16.6.0",
     "ngx-pagination": "^6.0.3",
