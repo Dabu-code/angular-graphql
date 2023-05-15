@@ -1,0 +1,117 @@
+<div class="container py-5">
+    <div class="card">
+        <div class="card-header">
+            <h1> Angular - Apollo - Graphql</h1>
+            <div class="row">
+                <div class="col-12 col-md-10">
+                    <input type="search" class="form-control" [formControl]="searchData">
+                </div>
+                <div class="col-12 col-md-2">
+                    <button class="btn btn-primary" (click)="btn_modal(null)" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">Agregar</button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div id="showProduct"></div>
+        </div>
+        <div class="card-body table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Imagen</th>
+                        <th scope="col">Configuraciónes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        *ngFor="let item of dataProducts | productPipe:searchInput  | paginate: { itemsPerPage: 5, currentPage: page }; let i=index;">
+                        <th>{{i+1}}</th>
+                        <td>{{item.title}}</td>
+                        <td>$ {{item.price}}</td>
+                        <td>{{item.description}}</td>
+                        <td><img src="{{item.images}}" alt="" srcset="" width="50"></td>
+                        <td>
+                            <div class="btn-group mb-3">
+                                <button class="btn btn-sm btn-info " (click)="btn_modal(item)"
+                                    data-bs-toggle="modal" data-bs-target="#exampleModal">Editar</button>
+                                <button class="btn btn-sm btn-danger mx-2"
+                                    (click)="btn_eliminar(item.id)">Eliminar</button>
+                                <button class="btn btn-sm btn-warning" (click)="get_data(item.id)">Ver</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            <pagination-controls (pageChange)="page = $event"></pagination-controls>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="form">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" formControlName="title">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Precio</label>
+                        <input type="number" class="form-control" formControlName="price">
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label class="form-label">Imagenes</label>
+                        <select class="form-select" formControlName="images" multiple>
+                            <option value="https://picsum.photos/640/640?r=4493"> Imagen 1 </option>
+                            <option value="https://picsum.photos/640/640?r=795"> Imagen 2</option>
+                            <option value="https://picsum.photos/640/640?r=3766">Imagen 3</option>
+                        </select>
+                    </div>
+
+
+
+
+                    <div class="mb-3">
+                        <label class="form-label">Descripción</label>
+                        <textarea cols="30" rows="5" class="form-control" formControlName="description"></textarea>
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="btn_save()" [disabled]="form.invalid"
+                    data-bs-dismiss="modal">Save
+                    changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+        <img src="..." class="rounded me-2" alt="...">
+        <strong class="me-auto">Bootstrap</strong>
+        <small>11 mins ago</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+        Hello, world! This is a toast message.
+    </div>
+</div>
